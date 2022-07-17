@@ -1,0 +1,57 @@
+{
+  "name": "appium-cdp-driver",
+  "description": "Appium driver for the filesystem",
+  "keywords": [
+    "appium",
+    "chrome-dev-tools"
+  ],
+  "version": "0.0.1",
+  "author": "",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appium/appium-fs-driver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/appium/appium-fs-driver/issues"
+  },
+  "main": "./build/driver.js",
+  "bin": {},
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "build",
+    "src"
+  ],
+  "appium": {
+    "driverName": "cdp-driver",
+    "automationName": "CDP",
+    "platformNames": [
+      "Android"
+    ],
+    "mainClass": "AppiumCDPDriver"
+  },
+  "scripts": {
+    "clean": "rimraf package-lock.json && rimraf node_modules && npm install",
+    "build": "rimraf build && tsc",
+    "watch": "tsc --watch",
+    "test": "mocha --require ts-node/register -p ./test/*.spec.js --timeout 260000",
+    "install-driver": "npm run build && appium driver install --source=local $(pwd)",
+    "reinstall-driver": "(appium driver uninstall cdp-driver || exit 0) && npm run install-driver"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "jest": "^27.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.2",
+    "webdriverio": "^7.12.4",
+    "mocha": "^10.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@appium/base-driver": "^8.5.7",
+    "@appium/support": "^2.59.2",
+    "chrome-remote-interface": "^0.31.3"
+  }
+}

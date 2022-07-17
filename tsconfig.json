@@ -1,0 +1,19 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "outDir": "build",
+    "strict": true,
+    "inlineSourceMap": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "skipLibCheck": true,
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "target": "ES2016"
+  },
+  "watchOptions": {
+    "excludeDirectories": ["**/node_modules", "build"]
+  }
+}
