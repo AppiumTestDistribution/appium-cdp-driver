@@ -1,12 +1,15 @@
 import { BaseDriver, errors } from "@appium/base-driver";
 import { getAdb, adbExec, startApplication } from "./adb";
-import { openBrowser, getConfig } from 'taiko';
-import commands from './commands'
-import CDP from 'chrome-remote-interface';
+import { openBrowser, getConfig, goto } from "taiko";
+import commands from "./commands";
+import log from "./logger";
+import fetch from "node-fetch";
+import retry from "async-retry";
 process.env.LOCAL_PROTOCOL = true;
 class AppiumCDPDriver extends BaseDriver {
   constructor(args) {
     super(args);
+    this.locatorStrategies = ["xpath", "id"];
     this.desiredCapConstraints = {
       automationName: {
         presence: true,
@@ -26,13 +29,27 @@ class AppiumCDPDriver extends BaseDriver {
     await getAdb();
     const port = await adbExec(browser);
     await startApplication(browser);
-    log.info('Browser opened')
-    const targets = await CDP.List({ port });
-    const target = targets.find((target) => {
+    log.info("Browser opened");
+    const data = await retry(
+      async (bail) => {
+        const res = await await fetch(`http://localhost:${port}/json/list`);
+        const data = await res.json();
+        return data;
+      },
+      {
+        retries: 5,
+        factor: 1,
+      }
+    );
+    const target = data.find((target) => {
       return target.url === "http://appium.io/";
     });
-    console.log(target);
-    //await openBrowser({ port: port, host: '127.0.0.1', target: '' });
+    log.info(`Target found: ${target.webSocketDebuggerUrl}`);
+    await openBrowser({
+      port: port,
+      host: "127.0.0.1",
+      target: target.webSocketDebuggerUrl,
+    });
     return res;
   }
 
@@ -42,5 +59,4 @@ class AppiumCDPDriver extends BaseDriver {
 }
 
 Object.assign(AppiumCDPDriver.prototype, commands);
-export { AppiumCDPDriver, createSession };
-export default AppiumCDPDriver;
+export { AppiumCDPDriver };

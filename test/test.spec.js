@@ -11,6 +11,10 @@ describe("Plugin Test", () => {
   });
 
   it("Vertical swipe test", async () => {
+    await driver.url("https://www.google.com");
+    const url = await driver.getUrl();
+    console.log(url);
+    await driver.$("//input[contains(@name,'btnI')]");
   });
 
   afterEach(async () => await driver.deleteSession());
