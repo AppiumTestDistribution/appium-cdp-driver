@@ -36,7 +36,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | Command                                                      | Ref                                                                  | Description             | Implementation Status |
 | ------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------------- | --------------------- |
 | [active](src/commands/active.js)                             | [here](https://www.w3.org/TR/webdriver/#dfn-get-active-element)      | Get Active Element      | ❌                    |
-| [back](src/commands/back.js)                                 | [here](https://www.w3.org/TR/webdriver/#dfn-back)                    | Back                    | ❌                    |
+| [back](src/commands/back.js)                                 | [here](https://www.w3.org/TR/webdriver/#dfn-back)                    | Back                    | ✅                   |
 | [clear](src/commands/clear.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-clear)           | Element Clear           | ✅                    |
 | [click](src/commands/click.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-click)           | Element Click           | ✅                    |
 | [closeWindow](src/commands/closeWindow.js)                   | [here](https://www.w3.org/TR/webdriver/#dfn-close-window)            | Close Window            | ❌                    |
@@ -51,7 +51,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [execute](src/commands/execute.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-execute-script)          | Execute Script          | ❌                    |
 | [executeAsync](src/commands/executeAsync.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-execute-async-script)    | Execute Async Script    | ❌                    |
 | [findElOrEls](src/commands/findElOrEls.js)                   | [here](https://www.w3.org/TR/webdriver/#element-retrieval)           | Find Elements           | ✅                    |
-| [forward](src/commands/forward.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-forward)                 | Forward                 | ❌                    |
+| [forward](src/commands/forward.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-forward)                 | Forward                 | ✅                    |
 | [fullScreenWindow](src/commands/fullScreenWindow.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-fullscreen-window)       | Fullscreen Window       | ❌                    |
 | [getAlertText](src/commands/getAlertText.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-alert-text)          | Get Alert Text          | ❌                    |
 | [getAttribute](src/commands/getAttribute.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-attribute)   | Get Element Attribute   | ❌                    |
