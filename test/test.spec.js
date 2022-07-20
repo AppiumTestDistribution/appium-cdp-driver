@@ -15,7 +15,7 @@ describe("Plugin Test", () => {
     const url = await driver.getUrl();
     console.log(url);
     const element = await driver.$("id=user_email");
-    await element.click();
+    await element.setValue("test123");
   });
 
   afterEach(async () => await driver.deleteSession());

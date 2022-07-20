@@ -1,5 +1,5 @@
 import { errors } from "@appium/base-driver";
-import { click } from "taiko";
+import { click, into, write } from "taiko";
 import { elementCache } from "./find";
 
 let commands = {},
@@ -27,6 +27,16 @@ commands.elementDisplayed = async function elementDisplayed(elementId) {
 commands.elementEnabled = async function elementEnabled(elementId) {
   const element = elementCache[elementId];
   return !element.isDisabled();
+};
+
+commands.setValue = async function setValue(value, elementId) {
+  const element = elementCache[elementId];
+  await write(value, into(element));
+}
+
+commands.clear = async function clear(elementId) {
+  const element = elementCache[elementId];
+  await write('', into(element));
 };
 
 Object.assign(extensions, commands, helpers);
