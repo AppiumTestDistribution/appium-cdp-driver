@@ -25,7 +25,7 @@ class AppiumCDPDriver extends BaseDriver {
   async createSession(jwpCaps, reqCaps, w3cCaps, otherDriverData) {
     console.log(await getConfig("local"));
     const res = await super.createSession(w3cCaps);
-    const browser = w3cCaps.alwaysMatch["appium:browserName"];
+    const browser = w3cCaps.alwaysMatch["browserName"];
     await getAdb();
     const port = await adbExec(browser);
     await startApplication(browser);
@@ -34,6 +34,9 @@ class AppiumCDPDriver extends BaseDriver {
       async (bail) => {
         const res = await await fetch(`http://localhost:${port}/json/list`);
         const data = await res.json();
+        if (data.length == 0) {
+          throw new Error('Debug list is empty');
+        }
         return data;
       },
       {
@@ -42,7 +45,7 @@ class AppiumCDPDriver extends BaseDriver {
       }
     );
     const target = data.find((target) => {
-      return target.url === "http://appium.io/";
+      return (target.url).includes("appium.io");
     });
     log.info(`Target found: ${target.webSocketDebuggerUrl}`);
     await openBrowser({

@@ -1,28 +1,42 @@
 import { errors } from "@appium/base-driver";
-import { $ } from "taiko";
-import log from "../logger";
+import { click, into, write } from "taiko";
+import { elementCache } from "./find";
 
 let commands = {},
   helpers = {},
   extensions = {};
 
-commands.findElOrEls = async function findElOrEls(
-  strategy,
-  selector,
-  mult,
-  context
-) {
-  log.info(`Strategy is ${strategy}`);
-  log.info(`Selector is ${selector}`);
-  if (strategy === "xpath") {
-    if (await $(selector).exists()) {
-      return true;
-    } else {
-      throw new errors.NoSuchAlertError(`unable to find element: ${selector}`);
-    }
-  } else if (strategy === "id") {
-    return await $(`#${selector}`).exists();
-  }
+async function _click(element) {
+  await click(element);
+}
+commands.click = async function click(elementId) {
+  const element = elementCache[elementId];
+  await _click(element);
+};
+
+commands.getText = async function getText(elementId) {
+  const element = elementCache[elementId];
+  return element.text();
+};
+
+commands.elementDisplayed = async function elementDisplayed(elementId) {
+  const element = elementCache[elementId];
+  return element.isVisible();
+};
+
+commands.elementEnabled = async function elementEnabled(elementId) {
+  const element = elementCache[elementId];
+  return !element.isDisabled();
+};
+
+commands.setValue = async function setValue(value, elementId) {
+  const element = elementCache[elementId];
+  await write(value, into(element));
+}
+
+commands.clear = async function clear(elementId) {
+  const element = elementCache[elementId];
+  await write('', into(element));
 };
 
 Object.assign(extensions, commands, helpers);
