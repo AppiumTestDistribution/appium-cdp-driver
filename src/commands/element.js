@@ -1,5 +1,5 @@
 import { errors } from "@appium/base-driver";
-import { $ } from "taiko";
+import { $, click } from "taiko";
 import log from "../logger";
 import { util } from "@appium/support";
 import { W3C_ELEMENT_KEY } from "@appium/base-driver/build/lib/constants";
@@ -22,7 +22,7 @@ commands.findElOrEls = async function findElOrEls(
   if (strategy === "xpath") {
     if (await $(selector).exists()) {
       const elementId = util.uuidV4();
-      this.elementCache[elementId] = $(selector);
+      elementCache[elementId] = $(selector);
       return { [W3C_ELEMENT_KEY]: elementId };
     } else {
       throw new errors.NoSuchAlertError(`unable to find element: ${selector}`);
@@ -32,8 +32,13 @@ commands.findElOrEls = async function findElOrEls(
   }
 };
 
+async function _click(element) {
+  await click(element);
+}
 commands.click = async function click(elementId) {
-  console.log(`Click on element ${elementId}`);
+  const element = elementCache[elementId];
+  console.log(element);
+  await _click(element);
 };
 
 Object.assign(extensions, commands, helpers);
