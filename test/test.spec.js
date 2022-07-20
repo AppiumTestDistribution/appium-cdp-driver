@@ -14,7 +14,7 @@ describe("Plugin Test", () => {
     await driver.url("https://github.com/");
     const url = await driver.getUrl();
     console.log(url);
-    const element = await driver.$("//*[contains(text(),'Email')]");
+    const element = await driver.$("id=user_email");
     await element.click();
   });
 
