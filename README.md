@@ -37,7 +37,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | ------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------------- | --------------------- |
 | [active](src/commands/active.js)                             | [here](https://www.w3.org/TR/webdriver/#dfn-get-active-element)      | Get Active Element      | ❌                    |
 | [back](src/commands/back.js)                                 | [here](https://www.w3.org/TR/webdriver/#dfn-back)                    | Back                    | ❌                    |
-| [clear](src/commands/clear.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-clear)           | Element Clear           | ❌                    |
+| [clear](src/commands/clear.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-clear)           | Element Clear           | ✅                    |
 | [click](src/commands/click.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-click)           | Element Click           | ✅                    |
 | [closeWindow](src/commands/closeWindow.js)                   | [here](https://www.w3.org/TR/webdriver/#dfn-close-window)            | Close Window            | ❌                    |
 | [createSession](src/commands/createSession.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-new-sessions)            | New Session             | ✅                    |
