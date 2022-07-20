@@ -1,5 +1,6 @@
 import { errors } from "@appium/base-driver";
-import { click, into, write, goBack } from "taiko";
+
+import { click, into, write, goBack, goForward } from "taiko";
 import { elementCache } from "./find";
 
 let commands = {},
