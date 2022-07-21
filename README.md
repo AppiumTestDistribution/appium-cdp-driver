@@ -63,7 +63,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [getElementRect](src/commands/getElementRect.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-rect)        | Get Element Rect        | ❌                    |
 | [getElementScreenshot](src/commands/getElementScreenshot.js) | [here](https://www.w3.org/TR/webdriver/#dfn-take-element-screenshot) | Take Element Screenshot | ❌                    |
 | [getName](src/commands/getName.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-tag-name)    | Get Element Tag Name    | ❌                    |
-| [getPageSource](src/commands/getPageSource.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-get-page-source)         | Get Page Source         | ❌                    |
+| [getPageSource](src/commands/getPageSource.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-get-page-source)         | Get Page Source         | ✅                    |
 | [getProperty](src/commands/getProperty.js)                   | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-property)    | Get Element Property    | ❌                    |
 | [getScreenshot](src/commands/getScreenshot.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-take-screenshot)         | Take Screenshot         | ❌                    |
 | [getText](src/commands/getText.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-text)        | Get Element Text        | ✅                    |
