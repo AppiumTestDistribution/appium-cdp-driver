@@ -22,5 +22,11 @@ describe("Plugin Test", () => {
     expect(title).to.eq('GitHub: Where the world builds software · GitHub');
   });
 
+  it('get Page source', async () =>{
+    await driver.url("https://github.com/");
+    const pageSource = await driver.getPageSource();
+    expect(pageSource).to.be.not.empty;
+  })
+
   afterEach(async () => await driver.deleteSession());
 });
