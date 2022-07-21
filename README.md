@@ -91,5 +91,5 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [setValue](src/commands/setValue.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-element-send-keys)       | Element Send Keys       | ✅                     |
 | [setWindow](src/commands/setWindow.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-switch-to-window)        | Switch To Window        | ❌                    |
 | [setWindowRect](src/commands/setWindowRect.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-set-window-rect)         | Set Window Rect         | ❌                    |
-| [title](src/commands/title.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-get-title)               | Get Title               | ❌                    |
+| [title](src/commands/title.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-get-title)               | Get Title               | ✅                  |
 | [uploadFile](src/commands/uploadFile.js)                     | -                                                                    | Upload File             | ❌                    |
