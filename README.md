@@ -1,6 +1,6 @@
-# CDP Driver
+# Appium CDP Driver
 
-CDP Driver is a W3C WebDriver that allows you to connect to chromium based android mobile browsers like chrome & samsung browser through any WebDriver client.
+Appium CDP Driver is a W3C WebDriver that allows you to connect to chromium based android mobile browsers like chrome & samsung browser through any WebDriver client.
 
 ## Installation
 
@@ -36,7 +36,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | Command                                                      | Ref                                                                  | Description             | Implementation Status |
 | ------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------------- | --------------------- |
 | [active](src/commands/active.js)                             | [here](https://www.w3.org/TR/webdriver/#dfn-get-active-element)      | Get Active Element      | ❌                    |
-| [back](src/commands/back.js)                                 | [here](https://www.w3.org/TR/webdriver/#dfn-back)                    | Back                    | ✅                   |
+| [back](src/commands/back.js)                                 | [here](https://www.w3.org/TR/webdriver/#dfn-back)                    | Back                    | ✅                    |
 | [clear](src/commands/clear.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-clear)           | Element Clear           | ✅                    |
 | [click](src/commands/click.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-element-click)           | Element Click           | ✅                    |
 | [closeWindow](src/commands/closeWindow.js)                   | [here](https://www.w3.org/TR/webdriver/#dfn-close-window)            | Close Window            | ❌                    |
@@ -88,8 +88,8 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [setCookie](src/commands/setCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-adding-a-cookie)         | Add Cookie              | ❌                    |
 | [setFrame](src/commands/setFrame.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-switch-to-frame)         | Switch To Frame         | ❌                    |
 | [setUrl](src/commands/url.js)                                | [here](https://www.w3.org/TR/webdriver/#dfn-navigate-to)             | Navigate To             | ✅                    |
-| [setValue](src/commands/setValue.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-element-send-keys)       | Element Send Keys       | ✅                     |
+| [setValue](src/commands/setValue.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-element-send-keys)       | Element Send Keys       | ✅                    |
 | [setWindow](src/commands/setWindow.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-switch-to-window)        | Switch To Window        | ❌                    |
 | [setWindowRect](src/commands/setWindowRect.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-set-window-rect)         | Set Window Rect         | ❌                    |
-| [title](src/commands/title.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-get-title)               | Get Title               | ✅                  |
+| [title](src/commands/title.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-get-title)               | Get Title               | ✅                    |
 | [uploadFile](src/commands/uploadFile.js)                     | -                                                                    | Upload File             | ❌                    |
