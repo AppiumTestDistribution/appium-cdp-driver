@@ -5,15 +5,15 @@ let commands = {},
   extensions = {};
 
 commands.title = async function pageTitle() {
-    return title();
+  return await title();
 };
 
 commands.back = async function back() {
-    await goBack();
+  await goBack();
 };
 
 commands.forward = async function forward() {
-    await goForward();
+  await goForward();
 };
 
 Object.assign(extensions, commands, helpers);

@@ -1,5 +1,3 @@
-import { errors } from "@appium/base-driver";
-
 import { click, into, write } from "taiko";
 import { elementCache } from "./find";
 
@@ -33,11 +31,11 @@ commands.elementEnabled = async function elementEnabled(elementId) {
 commands.setValue = async function setValue(value, elementId) {
   const element = elementCache[elementId];
   await write(value, into(element));
-}
+};
 
 commands.clear = async function clear(elementId) {
   const element = elementCache[elementId];
-  await write('', into(element));
+  await write("", into(element));
 };
 
 Object.assign(extensions, commands, helpers);
