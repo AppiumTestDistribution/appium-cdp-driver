@@ -42,8 +42,8 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [closeWindow](src/commands/closeWindow.js)                   | [here](https://www.w3.org/TR/webdriver/#dfn-close-window)            | Close Window            | ❌                    |
 | [createSession](src/commands/createSession.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-new-sessions)            | New Session             | ✅                    |
 | [createWindow](src/commands/createWindow.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-new-window)              | New Window              | ❌                    |
-| [deleteCookie](src/commands/deleteCookie.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-delete-cookie)           | Delete Cookie           | ❌                    |
-| [deleteCookies](src/commands/deleteCookies.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-delete-all-cookies)      | Delete All Cookies      | ❌                    |
+| [deleteCookie](src/commands/deleteCookie.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-delete-cookie)           | Delete Cookie           | ✅                    |
+| [deleteCookies](src/commands/deleteCookies.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-delete-all-cookies)      | Delete All Cookies      | ✅                    |
 | [deleteSession](src/commands/deleteSession.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-delete-session)          | Delete Session          | ❌                    |
 | [elementDisplayed](src/commands/elementDisplayed.js)         | [here](https://www.w3.org/TR/webdriver/#element-displayedness)       | Is Element Displayed    | ✅                    |
 | [elementEnabled](src/commands/elementEnabled.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-is-element-enabled)      | Is Element Enabled      | ✅                    |
@@ -57,8 +57,8 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [getAttribute](src/commands/getAttribute.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-attribute)   | Get Element Attribute   | ❌                    |
 | [getComputedLabel](src/commands/getComputedLabel.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-get-computed-label)      | Get Computed Label      | ❌                    |
 | [getComputedRole](src/commands/getComputedRole.js)           | [here](https://www.w3.org/TR/webdriver/#dfn-get-computed-role)       | Get Computed Role       | ❌                    |
-| [getCookie](src/commands/getCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-get-named-cookie)        | Get Named Cookie        | ❌                    |
-| [getCookies](src/commands/getCookies.js)                     | [here](https://www.w3.org/TR/webdriver/#dfn-get-all-cookies)         | Get All Cookies         | ❌                    |
+| [getCookie](src/commands/getCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-get-named-cookie)        | Get Named Cookie        | ✅                    |
+| [getCookies](src/commands/getCookies.js)                     | [here](https://www.w3.org/TR/webdriver/#dfn-get-all-cookies)         | Get All Cookies         | ✅                    |
 | [getCssProperty](src/commands/getCssProperty.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-css-value)   | Get Element CSS Value   | ❌                    |
 | [getElementRect](src/commands/getElementRect.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-rect)        | Get Element Rect        | ❌                    |
 | [getElementScreenshot](src/commands/getElementScreenshot.js) | [here](https://www.w3.org/TR/webdriver/#dfn-take-element-screenshot) | Take Element Screenshot | ❌                    |
@@ -85,7 +85,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [releaseActions](src/commands/releaseActions.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-release-actions)         | Release Actions         | ❌                    |
 | [scriptTimeoutW3C](src/commands/scriptTimeoutW3C.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-set-timeouts)            | Set Script Timeout      | ❌                    |
 | [setAlertText](src/commands/setAlertText.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-send-alert-text)         | Send Alert Text         | ❌                    |
-| [setCookie](src/commands/setCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-adding-a-cookie)         | Add Cookie              | ❌                    |
+| [setCookie](src/commands/setCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-adding-a-cookie)         | Add Cookie              | ✅                    |
 | [setFrame](src/commands/setFrame.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-switch-to-frame)         | Switch To Frame         | ❌                    |
 | [setUrl](src/commands/url.js)                                | [here](https://www.w3.org/TR/webdriver/#dfn-navigate-to)             | Navigate To             | ✅                    |
 | [setValue](src/commands/setValue.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-element-send-keys)       | Element Send Keys       | ✅                    |
