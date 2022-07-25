@@ -44,7 +44,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [createWindow](src/commands/createWindow.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-new-window)              | New Window              | ❌                    |
 | [deleteCookie](src/commands/deleteCookie.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-delete-cookie)           | Delete Cookie           | ✅                    |
 | [deleteCookies](src/commands/deleteCookies.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-delete-all-cookies)      | Delete All Cookies      | ✅                    |
-| [deleteSession](src/commands/deleteSession.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-delete-session)          | Delete Session          | ❌                    |
+| [deleteSession](src/commands/deleteSession.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-delete-session)          | Delete Session          | ✅                    |
 | [elementDisplayed](src/commands/elementDisplayed.js)         | [here](https://www.w3.org/TR/webdriver/#element-displayedness)       | Is Element Displayed    | ✅                    |
 | [elementEnabled](src/commands/elementEnabled.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-is-element-enabled)      | Is Element Enabled      | ✅                    |
 | [elementSelected](src/commands/elementSelected.js)           | [here](https://www.w3.org/TR/webdriver/#dfn-is-element-selected)     | Is Element Selected     | ❌                    |
