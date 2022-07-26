@@ -49,5 +49,16 @@ describe("Plugin Test", () => {
     expect(allCookies).to.eql([]);
   })
 
+  it('Screenshot test', async () => {
+
+    await driver.url("https://github.com/");
+    const element = await driver.$("id=user_email");
+    await element.setValue('heman@h.com')
+    const eleScreenshot = await element.saveScreenshot('./1.png');
+    expect(eleScreenshot).to.be.not.null;
+    const screenshot = await driver.saveScreenshot('./2.png');
+    expect(screenshot).to.be.not.null;
+  })
+
   afterEach(async () => await driver.deleteSession());
 });
