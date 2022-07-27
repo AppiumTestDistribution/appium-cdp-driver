@@ -36,7 +36,7 @@
     "clean": "rimraf package-lock.json && rimraf node_modules && TAIKO_SKIP_CHROMIUM_DOWNLOAD=true npm install",
     "build": "rimraf build && tsc",
     "watch": "tsc --watch",
-    "test": "mocha --require ts-node/register -p ./test/*.spec.js --timeout 260000 ",
+    "test": "mocha --require ts-node/register ./test/*.spec.js --timeout 260000 ",
     "install-driver": "npm run build && appium driver install --source=local $(pwd)",
     "reinstall-driver": "(appium driver uninstall cdp-driver || exit 0) && npm run install-driver"
   },

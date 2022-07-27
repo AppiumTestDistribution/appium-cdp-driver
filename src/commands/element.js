@@ -25,7 +25,7 @@ commands.elementDisplayed = async function elementDisplayed(elementId) {
 
 commands.elementEnabled = async function elementEnabled(elementId) {
   const element = elementCache[elementId];
-  return !element.isDisabled();
+  return !await element.isDisabled();
 };
 
 commands.setValue = async function setValue(value, elementId) {
@@ -36,6 +36,11 @@ commands.setValue = async function setValue(value, elementId) {
 commands.clear = async function clear(elementId) {
   const element = elementCache[elementId];
   await write("", into(element));
+};
+
+commands.getAttribute = async function getAttribute(value, elementId) {
+  const element = elementCache[elementId];
+  return await element.attribute(value);
 };
 
 Object.assign(extensions, commands, helpers);

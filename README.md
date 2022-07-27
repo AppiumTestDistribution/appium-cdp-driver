@@ -54,7 +54,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [forward](src/commands/forward.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-forward)                 | Forward                 | ✅                    |
 | [fullScreenWindow](src/commands/fullScreenWindow.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-fullscreen-window)       | Fullscreen Window       | ❌                    |
 | [getAlertText](src/commands/getAlertText.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-alert-text)          | Get Alert Text          | ❌                    |
-| [getAttribute](src/commands/getAttribute.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-attribute)   | Get Element Attribute   | ❌                    |
+| [getAttribute](src/commands/getAttribute.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-attribute)   | Get Element Attribute   | ✅                    |
 | [getComputedLabel](src/commands/getComputedLabel.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-get-computed-label)      | Get Computed Label      | ❌                    |
 | [getComputedRole](src/commands/getComputedRole.js)           | [here](https://www.w3.org/TR/webdriver/#dfn-get-computed-role)       | Get Computed Role       | ❌                    |
 | [getCookie](src/commands/getCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-get-named-cookie)        | Get Named Cookie        | ✅                    |
