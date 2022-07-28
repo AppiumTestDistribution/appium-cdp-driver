@@ -81,7 +81,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [postAcceptAlert](src/commands/postAcceptAlert.js)           | [here](https://www.w3.org/TR/webdriver/#dfn-accept-alert)            | Accept Alert            | ❌                    |
 | [postDismissAlert](src/commands/postDismissAlert.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-dismiss-alert)           | Dismiss Alert           | ❌                    |
 | [printPage](src/commands/printPage.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-print-page)              | Print Page              | ❌                    |
-| [refresh](src/commands/refresh.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-refresh)                 | Refresh                 | ❌                    |
+| [refresh](src/commands/refresh.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-refresh)                 | Refresh                 | ✅                    |
 | [releaseActions](src/commands/releaseActions.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-release-actions)         | Release Actions         | ❌                    |
 | [scriptTimeoutW3C](src/commands/scriptTimeoutW3C.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-set-timeouts)            | Set Script Timeout      | ❌                    |
 | [setAlertText](src/commands/setAlertText.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-send-alert-text)         | Send Alert Text         | ❌                    |

@@ -1,4 +1,4 @@
-import { goto, currentURL } from "taiko";
+import { goto, currentURL, reload } from "taiko";
 
 let commands = {},
   helpers = {},
@@ -10,6 +10,10 @@ commands.setUrl = async function setUrl(url) {
 
 commands.getUrl = async function getUrl() {
   return await currentURL();
+};
+
+commands.refresh = async function refresh() {
+  return await reload();
 };
 
 Object.assign(extensions, commands, helpers);
