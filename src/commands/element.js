@@ -1,4 +1,4 @@
-import { click, into, write } from "taiko";
+import {click, evaluate, into, write} from "taiko";
 import { elementCache } from "./find";
 
 let commands = {},
@@ -42,6 +42,15 @@ commands.getAttribute = async function getAttribute(value, elementId) {
   const element = elementCache[elementId];
   return await element.attribute(value);
 };
+
+commands.getElementRect = async function getElementRect(elementId) {
+  const element = elementCache[elementId];
+  return await evaluate(element, (element) =>
+  {
+    const {x, y, width, height } = element.getBoundingClientRect();
+    return {x, y, width, height }
+  });
+}
 
 Object.assign(extensions, commands, helpers);
 export { commands, helpers };

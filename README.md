@@ -60,7 +60,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [getCookie](src/commands/getCookie.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-get-named-cookie)        | Get Named Cookie        | ✅                    |
 | [getCookies](src/commands/getCookies.js)                     | [here](https://www.w3.org/TR/webdriver/#dfn-get-all-cookies)         | Get All Cookies         | ✅                    |
 | [getCssProperty](src/commands/getCssProperty.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-css-value)   | Get Element CSS Value   | ❌                    |
-| [getElementRect](src/commands/getElementRect.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-rect)        | Get Element Rect        | ❌                    |
+| [getElementRect](src/commands/getElementRect.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-rect)        | Get Element Rect        | ✅                    |
 | [getElementScreenshot](src/commands/getElementScreenshot.js) | [here](https://www.w3.org/TR/webdriver/#dfn-take-element-screenshot) | Take Element Screenshot | ✅                    |
 | [getName](src/commands/getName.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-tag-name)    | Get Element Tag Name    | ❌                    |
 | [getPageSource](src/commands/getPageSource.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-get-page-source)         | Get Page Source         | ✅                    |
