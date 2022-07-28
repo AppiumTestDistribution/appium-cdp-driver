@@ -52,6 +52,14 @@ commands.getElementRect = async function getElementRect(elementId) {
   });
 }
 
+commands.getName = async function getName(elementId) {
+  const element = elementCache[elementId];
+  return await evaluate(element, (element) =>
+  {
+   return element.tagName;
+  });
+};
+
 Object.assign(extensions, commands, helpers);
 export { commands, helpers };
 export default extensions;
