@@ -9,9 +9,9 @@ export const WDIO_PARAMS = {
 };
 
 export const androidCapabilities = {
-  platformName: "Android",
-  "appium:automationName": "CDP",
-  "appium:browserName": "Terrace",
+  platformName: 'Android',
+  'appium:automationName': 'CDP',
+  'appium:browserName': 'opera',
 };
 
 export const iOSCapabilities = {
