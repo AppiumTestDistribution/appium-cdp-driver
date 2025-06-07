@@ -2,6 +2,16 @@
 
 Appium CDP Driver is a W3C WebDriver that allows you to connect to chromium based android mobile browsers like chrome & samsung browser through any WebDriver client.
 
+## Sponsors
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="src/assets/White_512px.png">
+    <source media="(prefers-color-scheme: light)" srcset="src/assets/Black_512px.png">
+    <img alt="Sponsor Logo" src="src/assets/Black_512px.png" width="200">
+  </picture>
+</div>
+
 ## Installation
 
 Install `cdp-driver` (if not installed)
@@ -20,10 +30,10 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 
 ### Appium Capabilities
 
-| Capability              | Required |  Type  | Description                   |
-| ----------------------- | :------: | :----: | ----------------------------- |
-| `appium:automationName` |    +     | string | Must be `CDP`                 |
-| `appium:browserName`    |    +     | string | Must be `chrome` or `Terrace` |
+| Capability              | Required |  Type  | Description                                         |
+| ----------------------- | :------: | :----: | --------------------------------------------------- |
+| `appium:automationName` |    +     | string | Must be `CDP`                                       |
+| `appium:browserName`    |    +     | string | Must be `chrome` or `Terrace` or `opera` or `brave` |
 
 ### W3C Capabilities
 
@@ -52,7 +62,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [executeAsync](src/commands/executeAsync.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-execute-async-script)    | Execute Async Script    | ❌                    |
 | [findElOrEls](src/commands/findElOrEls.js)                   | [here](https://www.w3.org/TR/webdriver/#element-retrieval)           | Find Elements           | ✅                    |
 | [forward](src/commands/forward.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-forward)                 | Forward                 | ✅                    |
-| [fullScreenWindow](src/commands/fullScreenWindow.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-fullscreen-window)       | Fullscreen Window       | Not supported                   |
+| [fullScreenWindow](src/commands/fullScreenWindow.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-fullscreen-window)       | Fullscreen Window       | Not supported         |
 | [getAlertText](src/commands/getAlertText.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-alert-text)          | Get Alert Text          | ❌                    |
 | [getAttribute](src/commands/getAttribute.js)                 | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-attribute)   | Get Element Attribute   | ✅                    |
 | [getComputedLabel](src/commands/getComputedLabel.js)         | [here](https://www.w3.org/TR/webdriver/#dfn-get-computed-label)      | Get Computed Label      | ❌                    |
@@ -62,7 +72,7 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [getCssProperty](src/commands/getCssProperty.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-css-value)   | Get Element CSS Value   | ❌                    |
 | [getElementRect](src/commands/getElementRect.js)             | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-rect)        | Get Element Rect        | ✅                    |
 | [getElementScreenshot](src/commands/getElementScreenshot.js) | [here](https://www.w3.org/TR/webdriver/#dfn-take-element-screenshot) | Take Element Screenshot | ✅                    |
-| [getName](src/commands/getName.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-tag-name)    | Get Element Tag Name    | ✅                     |
+| [getName](src/commands/getName.js)                           | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-tag-name)    | Get Element Tag Name    | ✅                    |
 | [getPageSource](src/commands/getPageSource.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-get-page-source)         | Get Page Source         | ✅                    |
 | [getProperty](src/commands/getProperty.js)                   | [here](https://www.w3.org/TR/webdriver/#dfn-get-element-property)    | Get Element Property    | ❌                    |
 | [getScreenshot](src/commands/getScreenshot.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-take-screenshot)         | Take Screenshot         | ✅                    |
@@ -90,6 +100,6 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 | [setUrl](src/commands/url.js)                                | [here](https://www.w3.org/TR/webdriver/#dfn-navigate-to)             | Navigate To             | ✅                    |
 | [setValue](src/commands/setValue.js)                         | [here](https://www.w3.org/TR/webdriver/#dfn-element-send-keys)       | Element Send Keys       | ✅                    |
 | [setWindow](src/commands/setWindow.js)                       | [here](https://www.w3.org/TR/webdriver/#dfn-switch-to-window)        | Switch To Window        | ❌                    |
-| [setWindowRect](src/commands/setWindowRect.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-set-window-rect)         | Set Window Rect         | Not supported                    |
+| [setWindowRect](src/commands/setWindowRect.js)               | [here](https://www.w3.org/TR/webdriver/#dfn-set-window-rect)         | Set Window Rect         | Not supported         |
 | [title](src/commands/title.js)                               | [here](https://www.w3.org/TR/webdriver/#dfn-get-title)               | Get Title               | ✅                    |
-| [uploadFile](src/commands/uploadFile.js)                     | -                                                                    | Upload File             | Not supported                    |
+| [uploadFile](src/commands/uploadFile.js)                     | -                                                                    | Upload File             | Not supported         |
