@@ -5,7 +5,7 @@
     "appium",
     "chrome-dev-tools"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "",
   "license": "Apache-2.0",
   "repository": {
@@ -32,7 +32,7 @@
     ],
     "mainClass": "AppiumCDPDriver",
     "scripts": {
-      "skip-welcome-opera": "./scripts/opera.js"
+      "skip-welcome-opera": "./build/scripts/opera.js"
     }
   },
   "scripts": {
