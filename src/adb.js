@@ -1,6 +1,8 @@
 import { ADB, getSdkRootFromEnv } from 'appium-adb';
 import { fs } from '@appium/support';
 import getPort from 'get-port';
+import { AndroidUiautomator2Driver } from 'appium-uiautomator2-driver';
+import log from './logger';
 
 let adb;
 const START_APP_WAIT_DURATION = 60000;
@@ -90,6 +92,78 @@ export async function startApplication(browser = 'chrome') {
   } else if (browser === 'brave') {
     await adb.startApp(Object.assign({}, brave, common));
   } else if (browser === 'opera') {
+    await adb.adbExec(['shell', 'pm', 'clear', 'com.opera.browser']);
     await adb.startApp(Object.assign({}, opera, common));
+    const driver = new AndroidUiautomator2Driver();
+    const caps = {
+      platformName: 'Android',
+      'appium:automationName': 'UiAutomator2',
+      'appium:deviceName': 'Android Device',
+    };
+    await driver.createSession(null, {
+      alwaysMatch: caps,
+      firstMatch: [{}],
+    });
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    const activity = await driver.getCurrentActivity();
+    log.info(`Activity is ${activity}`);
+    if (activity.includes('Welcome')) {
+      // Helper function to find element with retry logic
+      const findElementWithRetry = async (
+        strategy,
+        selector,
+        maxRetries = 5
+      ) => {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+          try {
+            log.info(
+              `Attempting to find element (${strategy}: ${selector}) - Attempt ${attempt}/${maxRetries}`
+            );
+            const element = await driver.findElement(strategy, selector);
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second after finding element
+            log.info(
+              `Successfully found element (${strategy}: ${selector}) on attempt ${attempt}`
+            );
+            return element;
+          } catch (error) {
+            log.info(
+              `Failed to find element (${strategy}: ${selector}) on attempt ${attempt}: ${error.message}`
+            );
+            if (attempt === maxRetries) {
+              throw new Error(
+                `Failed to find element (${strategy}: ${selector}) after ${maxRetries} attempts: ${error.message}`
+              );
+            }
+            // Wait before retrying
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
+        }
+      };
+
+      const nextButton = await findElementWithRetry(
+        'id',
+        'com.opera.browser:id/continue_button'
+      );
+      log.info(`Next button is ${JSON.stringify(nextButton, null, 2)}`);
+      await driver.click(nextButton.ELEMENT);
+
+      const skipButton = await findElementWithRetry(
+        'id',
+        'com.opera.browser:id/skip_button'
+      );
+      await driver.click(skipButton.ELEMENT);
+
+      const skipAgainButton = await findElementWithRetry(
+        'id',
+        'com.opera.browser:id/skip_button'
+      );
+      await driver.click(skipAgainButton.ELEMENT);
+
+      const allowButton = await findElementWithRetry(
+        'xpath',
+        '//android.widget.Button[@text="Allow"]'
+      );
+      await driver.click(allowButton.ELEMENT);
+    }
   }
 }
