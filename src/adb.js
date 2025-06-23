@@ -1,6 +1,7 @@
 import { ADB, getSdkRootFromEnv } from 'appium-adb';
 import { fs } from '@appium/support';
 import getPort from 'get-port';
+import log from './logger';
 
 let adb;
 const START_APP_WAIT_DURATION = 60000;
@@ -84,12 +85,16 @@ export async function startApplication(browser = 'chrome') {
   };
 
   if (browser === 'chrome') {
+    log.info(`Starting Chrome`);
     await adb.startApp(Object.assign({}, chrome, common));
   } else if (browser === 'terrance') {
+    log.info(`Starting Terrance`);
     await adb.startApp(Object.assign({}, terrance, common));
   } else if (browser === 'brave') {
+    log.info(`Starting Brave`);
     await adb.startApp(Object.assign({}, brave, common));
   } else if (browser === 'opera') {
+    log.info(`Starting Opera`);
     await adb.startApp(Object.assign({}, opera, common));
   }
 }

@@ -1,6 +1,6 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"],
+  "include": ["src/**/*", "scripts/**/*"],
+  "exclude": ["node_modules", "**/*.d.ts", "build"],
   "compilerOptions": {
     "outDir": "build",
     "strict": true,
@@ -9,11 +9,12 @@
     "esModuleInterop": true,
     "types": ["node"],
     "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "moduleResolution": "Node",
     "module": "CommonJS",
-    "target": "ES2016"
-  },
-  "watchOptions": {
-    "excludeDirectories": ["**/node_modules", "build"]
+    "target": "ES2016",
+    "declaration": false,
+    "noResolve": false,
+    "isolatedModules": false
   }
 }
