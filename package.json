@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/appium/appium-cdp-driver/issues"
   },
-  "main": "./build/driver.js",
+  "main": "./build/src/driver.js",
   "bin": {},
   "directories": {
     "src": "src"
@@ -61,7 +61,8 @@
     "chai": "^4.3.6",
     "chrome-remote-interface": "^0.31.3",
     "get-port": "^5.1.1",
-    "taiko": "https://github.com/getgauge/taiko.git"
+    "taiko": "https://github.com/getgauge/taiko.git",
+    "asyncbox": "3.0.0"
   },
   "peerDependencies": {
     "appium": "^2.4.1 || ^3.0.0-beta.0"
