@@ -20,12 +20,14 @@ const common = {
 async function skipWelcomeOpera() {
   const adb = await ADB.createADB();
   await adb.adbExec(['shell', 'pm', 'clear', 'com.opera.browser']);
-  await adb.startApp(Object.assign({}, opera, common));
+  //await adb.startApp(Object.assign({}, opera, common));
   const driver = new AndroidUiautomator2Driver();
   const caps = {
-    platformName: 'Android',
-    'appium:automationName': 'UiAutomator2',
-    'appium:deviceName': 'Android Device',
+    platformName: "Android",
+    "appium:automationName": "UiAutomator2",
+    "appium:deviceName": "Android Device",
+    "appium:appPackage": "com.opera.browser",
+    "appium:appActivity": "com.opera.android.BrowserActivity",
   };
   try {
     await driver.createSession(null, {
@@ -104,7 +106,7 @@ async function skipWelcomeOpera() {
       try {
         const doneButton = await findElementWithWaitForCondition(
           'xpath',
-          '//android.widget.Button[@text="Done"]',
+          './/*[@text="Done"]',
           3000
         );
         await driver.click(doneButton.ELEMENT);
