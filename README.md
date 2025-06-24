@@ -6,9 +6,9 @@ Appium CDP Driver is a W3C WebDriver that allows you to connect to chromium base
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="src/assets/White_512px.png">
-    <source media="(prefers-color-scheme: light)" srcset="src/assets/Black_512px.png">
-    <img alt="Sponsor Logo" src="src/assets/Black_512px.png" width="200">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AppiumTestDistribution/appium-cdp-driver/refs/heads/main/src/assets/White_512px.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/AppiumTestDistribution/appium-cdp-driver/refs/heads/main/src/assets/Black_512px.png">
+    <img alt="Sponsor Logo" src="https://raw.githubusercontent.com/AppiumTestDistribution/appium-cdp-driver/refs/heads/main/src/assets/Black_512px.png" width="200">
   </picture>
 </div>
 

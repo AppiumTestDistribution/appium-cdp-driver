@@ -5,15 +5,15 @@
     "appium",
     "chrome-dev-tools"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appium/appium-cdp-driver.git"
+    "url": "https://github.com/appiumtestdistribution/appium-cdp-driver.git"
   },
   "bugs": {
-    "url": "https://github.com/appium/appium-cdp-driver/issues"
+    "url": "https://github.com/appiumtestdistribution/appium-cdp-driver/issues"
   },
   "main": "./build/src/driver.js",
   "bin": {},
