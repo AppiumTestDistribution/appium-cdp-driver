@@ -7,9 +7,9 @@ import { waitForCondition } from 'asyncbox';
 
 const START_APP_WAIT_DURATION = 60000;
 
-const opera = {
-  pkg: 'com.opera.browser',
-  activity: 'com.opera.android.BrowserActivity',
+const brave = {
+  pkg: 'com.brave.browser',
+  activity: 'com.google.android.apps.chrome.Main',
 };
 
 const common = {
@@ -17,17 +17,17 @@ const common = {
   optionalIntentArguments: '-d www.appium.io',
 };
 
-async function skipWelcomeOpera() {
+async function skipWelcomeBrave() {
   const adb = await ADB.createADB();
-  await adb.adbExec(['shell', 'pm', 'clear', 'com.opera.browser']);
+  await adb.adbExec(['shell', 'pm', 'clear', 'com.brave.browser']);
   //await adb.startApp(Object.assign({}, opera, common));
   const driver = new AndroidUiautomator2Driver();
   const caps = {
     platformName: "Android",
     "appium:automationName": "UiAutomator2",
     "appium:deviceName": "Android Device",
-    "appium:appPackage": "com.opera.browser",
-    "appium:appActivity": "com.opera.android.BrowserActivity",
+    "appium:appPackage": "com.brave.browser",
+    "appium:appActivity": "com.google.android.apps.chrome.Main",
   };
   try {
     await driver.createSession(null, {
@@ -37,11 +37,10 @@ async function skipWelcomeOpera() {
     const activity = await driver.getCurrentActivity();
     log.info(`Activity is ${activity}`);
     if (activity.includes('Welcome')) {
-      // Helper function to find element with waitForCondition
       const findElementWithWaitForCondition = async (
         strategy,
         selector,
-        timeout = 30000
+        timeout = 6000
       ) => {
         try {
           return await waitForCondition(
@@ -62,7 +61,7 @@ async function skipWelcomeOpera() {
             },
             {
               waitMs: timeout,
-              intervalMs: 2000,
+              intervalMs: 1000,
             }
           );
         } catch (error) {
@@ -72,54 +71,42 @@ async function skipWelcomeOpera() {
         }
       };
 
-      const nextButton = await findElementWithWaitForCondition(
+      const cancelButton = await findElementWithWaitForCondition(
         'id',
-        'com.opera.browser:id/continue_button'
+        'android:id/button2'
       );
-      log.info(`Next button is ${JSON.stringify(nextButton, null, 2)}`);
-      await driver.click(nextButton.ELEMENT);
-
-      const skipButton = await findElementWithWaitForCondition(
-        'id',
-        'com.opera.browser:id/skip_button'
-      );
-
-      const MAX_RETRIES = 3;
-      let attempt = 0;
-      let found = false;
-      
-      while (attempt < MAX_RETRIES && !found) {
-        await driver.click(skipButton.ELEMENT);
-        try{
-          await findElementWithWaitForCondition(
-            'xpath',
-            '//android.widget.Button[@text="Enable notifications"]'
-          );
-          found = true;
-        } catch(error) {
-          log.info(`Enable notifications text not found, retrying skip...`);
-          attempt++;
-        }
-      }
-
-      const skipAgainButton = await findElementWithWaitForCondition(
-        'id',
-        'com.opera.browser:id/skip_button'
-      );
-      await driver.click(skipAgainButton.ELEMENT);
-
-      const allowButton = await findElementWithWaitForCondition(
-        'xpath',
-        '//android.widget.Button[@text="Allow"]'
-      );
-      await driver.click(allowButton.ELEMENT);
+      log.info(`Cancel button is ${JSON.stringify(cancelButton, null, 2)}`);
+      await driver.click(cancelButton.ELEMENT);
 
       try {
-        const doneButton = await findElementWithWaitForCondition('id', 'com.opera.browser:id/positive_button', 8000);
-        await driver.click(doneButton.ELEMENT);
+        await findElementWithWaitForCondition(
+          'xpath',
+          '//android.widget.TextView[@text="Allow Brave to send you notifications?"]'
+        );
+
+        const allowButton = await findElementWithWaitForCondition(
+          'id',
+          'com.android.permissioncontroller:id/permission_allow_button'
+        );
+        await driver.click(allowButton.ELEMENT);
       } catch (error) {
-        log.info(`Done button not found, skipping`);
+        log.info(`Help make Brave better text not found, skipping`);
       }
+
+      const laterButton = await findElementWithWaitForCondition(
+        'id',
+        'com.brave.browser:id/btn_negative'
+      );
+      await driver.click(laterButton.ELEMENT);
+      await findElementWithWaitForCondition(
+        'xpath',
+        '//android.widget.TextView[@text="Help make Brave better."]'
+      );
+      const continueButton = await findElementWithWaitForCondition(
+        'id',
+        'com.brave.browser:id/btn_positive'
+      );
+      await driver.click(continueButton.ELEMENT);
     }
   } finally {
     await driver.deleteSession();
@@ -127,6 +114,6 @@ async function skipWelcomeOpera() {
 }
 
 (async () => {
-  await skipWelcomeOpera();
+  await skipWelcomeBrave();
   process.exit(0);
 })();

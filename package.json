@@ -5,7 +5,7 @@
     "appium",
     "chrome-dev-tools"
   ],
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "",
   "license": "Apache-2.0",
   "repository": {
@@ -32,7 +32,8 @@
     ],
     "mainClass": "AppiumCDPDriver",
     "scripts": {
-      "skip-welcome-opera": "./build/scripts/opera.js"
+      "skip-welcome-opera": "./build/scripts/opera.js",
+      "skip-welcome-brave": "./build/scripts/brave.js"
     }
   },
   "scripts": {
@@ -54,15 +55,15 @@
   },
   "dependencies": {
     "@appium/base-driver": "^8.5.7",
-    "appium-uiautomator2-driver": "^4.2.3",
     "@appium/support": "^2.59.2",
     "appium-adb": "^9.10.0",
+    "appium-uiautomator2-driver": "^4.2.3",
     "async-retry": "^1.3.3",
+    "asyncbox": "3.0.0",
     "chai": "^4.3.6",
     "chrome-remote-interface": "^0.31.3",
     "get-port": "^5.1.1",
-    "taiko": "https://github.com/getgauge/taiko.git",
-    "asyncbox": "3.0.0"
+    "taiko": "https://github.com/getgauge/taiko.git"
   },
   "peerDependencies": {
     "appium": "^2.4.1 || ^3.0.0-beta.0"
