@@ -114,11 +114,21 @@ async function skipWelcomeOpera() {
       );
       await driver.click(allowButton.ELEMENT);
 
-      try {
-        const doneButton = await findElementWithWaitForCondition('id', 'com.opera.browser:id/positive_button', 8000);
-        await driver.click(doneButton.ELEMENT);
-      } catch (error) {
-        log.info(`Done button not found, skipping`);
+      attempt = 0;
+      found = false;
+      
+      while (attempt < MAX_RETRIES && !found) {
+        try{
+          const doneButton = await findElementWithWaitForCondition('id', 'com.opera.browser:id/positive_button', 8000);
+          await driver.click(doneButton.ELEMENT);
+          found = true;
+        } catch(error) {
+          log.info(`Done button not found, retrying after opening a url...`);
+        }
+        finally {
+          await adb.shell(['am', 'start', '-a', 'android.intent.action.VIEW', '-d', 'https://www.appium.io', opera.pkg]);
+          attempt++;
+        }
       }
     }
   } finally {
