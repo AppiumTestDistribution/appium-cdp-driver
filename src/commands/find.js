@@ -39,8 +39,10 @@ helpers.findElOrEls = async function findElOrEls(
     elementCache[elementId] = elStrategy;
     return { [W3C_ELEMENT_KEY]: elementId };
   } else if (mult) {
-    let els = [];
-    (await elStrategy.elements()).forEach((element) => {
+    const foundEls = await elStrategy.elements();
+    log.info(`Found ${foundEls.length} elements using strategy: ${strategy}`);
+    const els = [];
+    foundEls.forEach((element) => {
       const elementId = getUUID();
       elementCache[elementId] = element;
       els.push({ ELEMENT: elementId });
