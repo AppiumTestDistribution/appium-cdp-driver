@@ -26,9 +26,6 @@ helpers.findElOrEls = async function findElOrEls(
   // const elStrategy = $(selector);
   let elStrategy;
   switch (strategy) {
-    case 'xpath' || 'css selector':
-      elStrategy = $(selector);
-      break;
     case 'id':
       elStrategy = $(`#${selector}`);
       break;
