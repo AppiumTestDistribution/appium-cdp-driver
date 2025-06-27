@@ -23,14 +23,27 @@ helpers.findElOrEls = async function findElOrEls(
   log.info(`Selector is ${selector}`);
   log.info(`Mult is ${mult}`);
   log.info(`Context is ${context}`);
-  const elStrategy = strategy === 'xpath' ? $(selector) : $(`#${selector}`);
+  // const elStrategy = $(selector);
+  let elStrategy;
+  switch (strategy) {
+    case 'xpath' || 'css selector':
+      elStrategy = $(selector);
+      break;
+    case 'id':
+      elStrategy = $(`#${selector}`);
+      break;
+    case 'class':
+      elStrategy = $(`.${selector}`);
+    default:
+      elStrategy = $(selector);
+  }
   if ((await elStrategy.exists()) && !mult) {
     const elementId = getUUID();
     elementCache[elementId] = elStrategy;
     return { [W3C_ELEMENT_KEY]: elementId };
   } else if (mult) {
     let els = [];
-    (await $(selector).elements()).forEach((element) => {
+    (await elStrategy.elements()).forEach((element) => {
       const elementId = getUUID();
       elementCache[elementId] = element;
       els.push({ ELEMENT: elementId });
