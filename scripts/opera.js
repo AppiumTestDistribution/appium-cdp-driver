@@ -106,7 +106,23 @@ async function skipWelcomeOpera() {
         'id',
         'com.opera.browser:id/skip_button'
       );
-      await driver.click(skipAgainButton.ELEMENT);
+
+      attempt = 0;
+      found = false;
+      while (attempt < MAX_RETRIES && !found) {
+        await driver.click(skipAgainButton.ELEMENT);
+        try{
+          await findElementWithWaitForCondition(
+            'xpath',
+            '//android.widget.Button[@text="Allow"]'
+          );
+          found = true;
+        } catch(error) {
+          log.info(`Enable notifications text not found, retrying skip...`);
+          attempt++;
+        }
+      }
+
 
       const allowButton = await findElementWithWaitForCondition(
         'xpath',
