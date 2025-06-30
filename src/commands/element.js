@@ -30,7 +30,8 @@ commands.elementEnabled = async function elementEnabled(elementId) {
 
 commands.setValue = async function setValue(value, elementId) {
   const element = elementCache[elementId];
-  await write(value, into(element));
+  const input = Array.isArray(value) ? value.join('') : value;
+  await write(input, into(element));
 };
 
 commands.clear = async function clear(elementId) {
