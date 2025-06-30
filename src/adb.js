@@ -10,6 +10,7 @@ const DEVTOOLS_SOCKET_MAP = {
   chrome: 'chrome_devtools_remote',
   brave: 'chrome_devtools_remote',
   opera: 'com.opera.browser.devtools',
+  duckduckgo: 'webview_devtools_remote',
   terrance: 'com.sec.android.app.sbrowser_devtools_remote',
 };
 
@@ -49,14 +50,36 @@ export async function requireSdkRoot() {
 
 export async function adbExec(browser = 'chrome') {
   let freePort = await getPort();
-  const devtoolsSocket =
+  let devtoolsSocket =
     DEVTOOLS_SOCKET_MAP[browser] || `${browser}_devtools_remote`;
+
+  if (browser === 'duckduckgo') {
+    const pid = await getDuckDuckGoPid(browser);
+    if (pid) {
+      devtoolsSocket = `webview_devtools_remote_${pid}`;
+    } else {
+      throw new Error(`Unable to get PID for ${browser}`);
+    }
+  }
+
   await adb.adbExec([
     'forward',
     `tcp:${freePort}`,
     `localabstract:${devtoolsSocket}`,
   ]);
   return freePort;
+}
+ 
+async function getDuckDuckGoPid(browser = 'duckduckgo') {
+  const packageName = 'com.duckduckgo.mobile.android';
+  try {
+    const output = await adb.adbExec(['shell', 'pidof', packageName]);
+    const pid = output.trim();
+    return pid || null;
+  } catch (err) {
+    console.error(`Unable to get PID for ${browser}:`, err.message);
+    return null;
+  }
 }
 
 export async function startApplication(browser = 'chrome') {
@@ -84,6 +107,11 @@ export async function startApplication(browser = 'chrome') {
     activity: 'com.opera.android.BrowserActivity',
   };
 
+  const duckduckgo = {
+    pkg: 'com.duckduckgo.mobile.android',
+    activity: 'com.duckduckgo.app.browser.BrowserActivity',
+  };
+
   if (browser === 'chrome') {
     log.info(`Starting Chrome`);
     await adb.startApp(Object.assign({}, chrome, common));
@@ -96,5 +124,8 @@ export async function startApplication(browser = 'chrome') {
   } else if (browser === 'opera') {
     log.info(`Starting Opera`);
     await adb.startApp(Object.assign({}, opera, common));
+  } else if (browser === 'duckduckgo') {
+    log.info(`Starting DuckDuckGo`);
+    await adb.startApp(Object.assign({}, duckduckgo, common));
   }
 }

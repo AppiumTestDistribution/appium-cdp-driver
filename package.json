@@ -33,7 +33,8 @@
     "mainClass": "AppiumCDPDriver",
     "scripts": {
       "skip-welcome-opera": "./build/scripts/opera.js",
-      "skip-welcome-brave": "./build/scripts/brave.js"
+      "skip-welcome-brave": "./build/scripts/brave.js",
+      "skip-welcome-duckduckgo": "./build/scripts/duckduckgo.js"
     }
   },
   "scripts": {
