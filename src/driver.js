@@ -27,8 +27,14 @@ class AppiumCDPDriver extends BaseDriver {
     const res = await super.createSession(w3cCaps);
     const browser = w3cCaps.alwaysMatch['browserName'];
     await getAdb();
-    const port = await adbExec(browser);
-    await startApplication(browser);
+    let port;
+    if (browser === 'duckduckgo') {
+      await startApplication(browser);
+      port = await adbExec(browser);
+    } else {
+      port = await adbExec(browser);
+      await startApplication(browser);
+    }
     log.info('Browser opened');
     // Wait a bit longer for Opera to initialize its CDP interface
     await new Promise((resolve) => setTimeout(resolve, 3000));
