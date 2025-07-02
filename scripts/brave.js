@@ -107,6 +107,8 @@ async function skipWelcomeBrave() {
         'com.brave.browser:id/btn_positive'
       );
       await driver.click(continueButton.ELEMENT);
+      await adb.shell(['am', 'start', '-a', 'android.intent.action.VIEW', '-d', 'https://lambdatest.com', brave.pkg]);
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   } finally {
     await driver.deleteSession();
