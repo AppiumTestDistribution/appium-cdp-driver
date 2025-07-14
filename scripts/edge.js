@@ -184,7 +184,7 @@ async function skipWelcomeEdge() {
         try{
           denyButton = await findElementWithWaitForCondition(
             'id',
-            'com.android.permissioncontroller:id/permission_deny_button'
+            'com.android.permissioncontroller:id/permission_allow_button'
           );
           log.info(`Deny button is ${JSON.stringify(denyButton, null, 2)}`);
           found = true;
