@@ -20,7 +20,6 @@ const common = {
 async function skipWelcomeOpera() {
   const adb = await ADB.createADB();
   await adb.adbExec(['shell', 'pm', 'clear', 'com.opera.browser']);
-  //await adb.startApp(Object.assign({}, opera, common));
   const driver = new AndroidUiautomator2Driver();
   const caps = {
     platformName: "Android",

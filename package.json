@@ -5,7 +5,7 @@
     "appium",
     "chrome-dev-tools"
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "",
   "license": "Apache-2.0",
   "repository": {
@@ -34,7 +34,9 @@
     "scripts": {
       "skip-welcome-opera": "./build/scripts/opera.js",
       "skip-welcome-brave": "./build/scripts/brave.js",
-      "skip-welcome-duckduckgo": "./build/scripts/duckduckgo.js"
+      "skip-welcome-duckduckgo": "./build/scripts/duckduckgo.js",
+      "skip-welcome-samsung": "./build/scripts/samsung.js",
+      "skip-welcome-edge": "./build/scripts/edge.js"
     }
   },
   "scripts": {

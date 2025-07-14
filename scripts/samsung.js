@@ -7,9 +7,9 @@ import { waitForCondition } from 'asyncbox';
 
 const START_APP_WAIT_DURATION = 60000;
 
-const brave = {
-  pkg: 'com.brave.browser',
-  activity: 'com.google.android.apps.chrome.Main',
+const samsung = {
+  pkg: 'com.sec.android.app.sbrowser',
+  activity: 'com.sec.android.app.sbrowser.SBrowserMainActivity',
 };
 
 const common = {
@@ -17,16 +17,16 @@ const common = {
   optionalIntentArguments: '-d www.appium.io',
 };
 
-async function skipWelcomeBrave() {
+async function skipWelcomeSamsung() {
   const adb = await ADB.createADB();
-  await adb.adbExec(['shell', 'pm', 'clear', 'com.brave.browser']);
+  await adb.adbExec(['shell', 'pm', 'clear', samsung.pkg]);
   const driver = new AndroidUiautomator2Driver();
   const caps = {
     platformName: "Android",
     "appium:automationName": "UiAutomator2",
     "appium:deviceName": "Android Device",
-    "appium:appPackage": "com.brave.browser",
-    "appium:appActivity": "com.google.android.apps.chrome.Main",
+    "appium:appPackage": samsung.pkg,
+    "appium:appActivity": samsung.activity,
   };
   try {
     await driver.createSession(null, {
@@ -35,7 +35,7 @@ async function skipWelcomeBrave() {
     });
     const activity = await driver.getCurrentActivity();
     log.info(`Activity is ${activity}`);
-    if (activity.includes('Welcome')) {
+    if (activity.includes('HelpIntroActivity')) {
       const findElementWithWaitForCondition = async (
         strategy,
         selector,
@@ -70,44 +70,24 @@ async function skipWelcomeBrave() {
         }
       };
 
-      const cancelButton = await findElementWithWaitForCondition(
-        'id',
-        'android:id/button2'
-      );
-      log.info(`Cancel button is ${JSON.stringify(cancelButton, null, 2)}`);
-      await driver.click(cancelButton.ELEMENT);
+      const MAX_RETRIES = 2;
+      let attempt = 0;
+      
+      while (attempt < MAX_RETRIES) {
+        try{
+          const buttonToClick = await findElementWithWaitForCondition(
+            'id',
+            'com.sec.android.app.sbrowser:id/help_intro_legal_agree_button'
+          );
+          log.info(`Button to click is ${JSON.stringify(buttonToClick, null, 2)}`);
+          await driver.click(buttonToClick.ELEMENT);
 
-      try {
-        await findElementWithWaitForCondition(
-          'xpath',
-          '//android.widget.TextView[@text="Allow Brave to send you notifications?"]'
-        );
-
-        const allowButton = await findElementWithWaitForCondition(
-          'id',
-          'com.android.permissioncontroller:id/permission_allow_button'
-        );
-        await driver.click(allowButton.ELEMENT);
-      } catch (error) {
-        log.info(`Help make Brave better text not found, skipping`);
-      }
-
-      const laterButton = await findElementWithWaitForCondition(
-        'id',
-        'com.brave.browser:id/btn_negative'
-      );
-      await driver.click(laterButton.ELEMENT);
-      await findElementWithWaitForCondition(
-        'xpath',
-        '//android.widget.TextView[@text="Help make Brave better."]'
-      );
-      const continueButton = await findElementWithWaitForCondition(
-        'id',
-        'com.brave.browser:id/btn_positive'
-      );
-      await driver.click(continueButton.ELEMENT);
-      await adb.shell(['am', 'start', '-a', 'android.intent.action.VIEW', '-d', 'https://lambdatest.com', brave.pkg]);
-      await new Promise(resolve => setTimeout(resolve, 5000));
+        } catch(error) {
+          log.info(`Continue button not found, retrying...`);
+        } finally {
+          attempt++;
+        }
+      } 
     }
   } finally {
     await driver.deleteSession();
@@ -115,6 +95,6 @@ async function skipWelcomeBrave() {
 }
 
 (async () => {
-  await skipWelcomeBrave();
+  await skipWelcomeSamsung();
   process.exit(0);
 })();

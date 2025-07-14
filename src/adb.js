@@ -11,6 +11,8 @@ const DEVTOOLS_SOCKET_MAP = {
   brave: 'chrome_devtools_remote',
   opera: 'com.opera.browser.devtools',
   duckduckgo: 'webview_devtools_remote',
+  samsung: 'Terrace_devtools_remote',
+  edge: 'chrome_devtools_remote',
   terrance: 'com.sec.android.app.sbrowser_devtools_remote',
 };
 
@@ -112,6 +114,16 @@ export async function startApplication(browser = 'chrome') {
     activity: 'com.duckduckgo.app.browser.BrowserActivity',
   };
 
+  const samsung = {
+    pkg: 'com.sec.android.app.sbrowser',
+    activity: 'com.sec.android.app.sbrowser.SBrowserMainActivity',
+  };
+  
+  const edge = {
+    pkg: 'com.microsoft.emmx',
+    activity: 'com.microsoft.ruby.Main',
+  };
+
   if (browser === 'chrome') {
     log.info(`Starting Chrome`);
     await adb.startApp(Object.assign({}, chrome, common));
@@ -127,5 +139,11 @@ export async function startApplication(browser = 'chrome') {
   } else if (browser === 'duckduckgo') {
     log.info(`Starting DuckDuckGo`);
     await adb.startApp(Object.assign({}, duckduckgo, common));
+  } else if (browser === 'samsung') {
+    log.info(`Starting Samsung Browser`);
+    await adb.startApp(Object.assign({}, samsung, common));
+  } else if (browser === 'edge') {
+    log.info(`Starting MS Edge`);
+    await adb.startApp(Object.assign({}, edge, common));
   }
 }
