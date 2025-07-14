@@ -157,9 +157,6 @@ async function skipWelcomeEdge() {
           attempt++;
         }
       }
-      await adb.shell(['pm', 'revoke', edge.pkg, 'android.permission.POST_NOTIFICATIONS']);
-      await adb.shell(['appops', 'set', edge.pkg, 'POST_NOTIFICATION', 'ignore']);
-
     }
   } finally {
     await driver.deleteSession();
