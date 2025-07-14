@@ -30,10 +30,10 @@ LOCAL_PROTOCOL=true appium server -pa /wd/hub --use-drivers=cdp-driver
 
 ### Appium Capabilities
 
-| Capability              | Required |  Type  | Description                                                         |
-| ----------------------- | :------: | :----: | ------------------------------------------------------------------- |
-| `appium:automationName` |    +     | string | Must be `CDP`                                                       |
-| `appium:browserName`    |    +     | string | Must be `chrome` or `Terrace` or `opera` or `brave` or `duckduckgo` |
+| Capability              | Required |  Type  | Description                                                                                |
+| ----------------------- | :------: | :----: | ------------------------------------------------------------------------------------------ |
+| `appium:automationName` |    +     | string | Must be `CDP`                                                                              |
+| `appium:browserName`    |    +     | string | Must be `chrome` or `Terrace` or `opera` or `brave` or `duckduckgo` or `samsung` or `edge` |
 
 ### W3C Capabilities
 
