@@ -1,5 +1,5 @@
 import { BaseDriver, errors } from '@appium/base-driver';
-import { getAdb, adbExec, startApplication } from './adb';
+import { getAdb, adbExec, startApplication, openStartUrl } from './adb';
 import { openBrowser, getConfig, goto } from 'taiko';
 import commands from './commands';
 import log from './logger';
@@ -19,6 +19,10 @@ class AppiumCDPDriver extends BaseDriver {
         presence: true,
         isString: true,
       },
+      adbPort: {
+        isNumber: false,
+        presence: false,
+      },
     };
   }
 
@@ -26,7 +30,7 @@ class AppiumCDPDriver extends BaseDriver {
     console.log(await getConfig('local'));
     const res = await super.createSession(w3cCaps);
     const browser = w3cCaps.alwaysMatch['browserName'];
-    await getAdb();
+    await getAdb(w3cCaps.alwaysMatch['appium:adbPort']);
     let port;
     if (browser === 'duckduckgo') {
       await startApplication(browser);
@@ -55,6 +59,15 @@ class AppiumCDPDriver extends BaseDriver {
           log.info(`CDP response: ${JSON.stringify(data)}`);
 
           if (!Array.isArray(data) || data.length === 0) {
+            // The socket is up but the browser holds no debuggable page — common
+            // for WebView-based browsers just after launch. Retrying the fetch
+            // alone changes nothing, so nudge the browser into opening one.
+            log.info('Debug list is empty, opening the start URL to create a page');
+            try {
+              await openStartUrl(browser);
+            } catch (launchError) {
+              log.info(`Could not open the start URL: ${launchError.message}`);
+            }
             throw new Error('Debug list is empty or invalid');
           }
 
@@ -71,9 +84,21 @@ class AppiumCDPDriver extends BaseDriver {
         maxTimeout: 10000,
       }
     );
-    const target = data.find((target) => {
-      return target.url.includes('appium.io');
-    });
+    // Prefer the page we launched, but do not require it: after a redirect, a
+    // new tab, or an onboarding page the list holds other targets, and reading
+    // webSocketDebuggerUrl off undefined fails the session with an opaque error.
+    let target = data.find((t) => t.url && t.url.includes('appium.io'));
+    if (!target) {
+      target =
+        data.find((t) => t.type === 'page' && t.webSocketDebuggerUrl) ||
+        data.find((t) => t.webSocketDebuggerUrl);
+      log.info(`No appium.io target; falling back to ${target ? target.url || target.type : 'none'}`);
+    }
+    if (!target) {
+      throw new Error(
+        `No CDP target with a webSocketDebuggerUrl in ${JSON.stringify(data)}`
+      );
+    }
     log.info(`Target found: ${target.webSocketDebuggerUrl}`);
     await openBrowser({
       port: port,

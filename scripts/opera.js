@@ -2,8 +2,10 @@
 
 import { AndroidUiautomator2Driver } from 'appium-uiautomator2-driver';
 import { ADB } from 'appium-adb';
+import { resolveAdbPort } from '../src/adb.js';
 import log from '../src/logger.js';
 import { waitForCondition } from 'asyncbox';
+import { clickSafely, finishSession } from './browserReady.js';
 
 const START_APP_WAIT_DURATION = 60000;
 
@@ -18,13 +20,15 @@ const common = {
 };
 
 async function skipWelcomeOpera() {
-  const adb = await ADB.createADB();
+  const adbPort = resolveAdbPort();
+  const adb = await ADB.createADB({ adbPort });
   await adb.adbExec(['shell', 'pm', 'clear', 'com.opera.browser']);
   //await adb.startApp(Object.assign({}, opera, common));
   const driver = new AndroidUiautomator2Driver();
   const caps = {
     platformName: "Android",
     "appium:automationName": "UiAutomator2",
+    "appium:adbPort": adbPort,
     "appium:deviceName": "Android Device",
     "appium:appPackage": "com.opera.browser",
     "appium:appActivity": "com.opera.android.BrowserActivity",
@@ -72,12 +76,20 @@ async function skipWelcomeOpera() {
         }
       };
 
-      const nextButton = await findElementWithWaitForCondition(
-        'id',
-        'com.opera.browser:id/continue_button'
-      );
-      log.info(`Next button is ${JSON.stringify(nextButton, null, 2)}`);
-      await driver.click(nextButton.ELEMENT);
+      // an Android system dialog (e.g. "System UI isn't responding") can cover the
+      // welcome screen, so this button is not guaranteed; readiness recovers
+      let nextButton = null;
+      try {
+        nextButton = await findElementWithWaitForCondition(
+          'id',
+          'com.opera.browser:id/continue_button'
+        );
+      } catch (error) {
+        log.info(`continue_button not present: ${error.message}`);
+      }
+      if (nextButton) {
+        await clickSafely(driver, nextButton);
+      }
 
       const skipButton = await findElementWithWaitForCondition(
         'id',
@@ -89,7 +101,7 @@ async function skipWelcomeOpera() {
       let found = false;
       
       while (attempt < MAX_RETRIES && !found) {
-        await driver.click(skipButton.ELEMENT);
+        await clickSafely(driver, skipButton);
         try{
           await findElementWithWaitForCondition(
             'xpath',
@@ -110,7 +122,7 @@ async function skipWelcomeOpera() {
       attempt = 0;
       found = false;
       while (attempt < MAX_RETRIES && !found) {
-        await driver.click(skipAgainButton.ELEMENT);
+        await clickSafely(driver, skipAgainButton);
         try{
           await findElementWithWaitForCondition(
             'xpath',
@@ -124,11 +136,20 @@ async function skipWelcomeOpera() {
       }
 
 
-      const allowButton = await findElementWithWaitForCondition(
-        'xpath',
-        '//android.widget.Button[@text="Allow"]'
-      );
-      await driver.click(allowButton.ELEMENT);
+      // the notification permission dialog is conditional
+      let allowButton = null;
+      try {
+        allowButton = await findElementWithWaitForCondition(
+          'xpath',
+          '//android.widget.Button[@text="Allow"]',
+          10000
+        );
+      } catch (error) {
+        log.info('Allow dialog not shown, skipping');
+      }
+      if (allowButton) {
+        await clickSafely(driver, allowButton);
+      }
 
       attempt = 0;
       found = false;
@@ -136,7 +157,7 @@ async function skipWelcomeOpera() {
       while (attempt < MAX_RETRIES && !found) {
         try{
           const doneButton = await findElementWithWaitForCondition('id', 'com.opera.browser:id/positive_button', 8000);
-          await driver.click(doneButton.ELEMENT);
+          await clickSafely(driver, doneButton);
           found = true;
         } catch(error) {
           log.info(`Done button not found, retrying after opening a url...`);
@@ -147,8 +168,21 @@ async function skipWelcomeOpera() {
         }
       }
     }
+  } catch (error) {
+    log.info(`walkthrough did not complete (${error.message}) — checking readiness anyway`);
   } finally {
-    await driver.deleteSession();
+    await finishSession(driver, {
+      adb,
+      pkg: opera.pkg,
+      component: `${opera.pkg}/${opera.activity}`,
+      socket: 'com.opera.browser.devtools',
+      selectors: [
+        '//android.widget.Button[@text="Accept and continue"]',
+        '//*[@resource-id="com.opera.browser:id/continue_button"]',
+        '//*[@resource-id="com.opera.browser:id/skip_button"]',
+        '//*[@resource-id="com.opera.browser:id/positive_button"]',
+      ],
+    });
   }
 }
 

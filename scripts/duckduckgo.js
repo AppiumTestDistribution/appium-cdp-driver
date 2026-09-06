@@ -2,8 +2,10 @@
 
 import { AndroidUiautomator2Driver } from 'appium-uiautomator2-driver';
 import { ADB } from 'appium-adb';
+import { resolveAdbPort } from '../src/adb.js';
 import log from '../src/logger.js';
 import { waitForCondition } from 'asyncbox';
+import { finishSession } from './browserReady.js';
 
 const START_APP_WAIT_DURATION = 60000;
 
@@ -18,12 +20,14 @@ const common = {
 };
 
 async function skipWelcomeDuckDuckGo() {
-  const adb = await ADB.createADB();
+  const adbPort = resolveAdbPort();
+  const adb = await ADB.createADB({ adbPort });
   await adb.adbExec(['shell', 'pm', 'clear', 'com.duckduckgo.mobile.android']);
   const driver = new AndroidUiautomator2Driver();
   const caps = {
     platformName: "Android",
     "appium:automationName": "UiAutomator2",
+    "appium:adbPort": adbPort,
     "appium:deviceName": "Android Device",
     "appium:appPackage": "com.duckduckgo.mobile.android",
     "appium:appActivity": "com.duckduckgo.app.browser.BrowserActivity",
@@ -92,8 +96,25 @@ async function skipWelcomeDuckDuckGo() {
         }
       }
     }
+  } catch (error) {
+    log.info(`walkthrough did not complete (${error.message}) — checking readiness anyway`);
   } finally {
-    await driver.deleteSession();
+    await finishSession(driver, {
+      adb,
+      pkg: duckduckgo.pkg,
+      component: `${duckduckgo.pkg}/${duckduckgo.activity}`,
+      // WebView app: the socket carries the pid, and the bare prefix would also
+      // match other apps' WebViews
+      socket: 'webview_devtools_remote',
+      pidScoped: true,
+      selectors: [
+        '//*[@resource-id="com.duckduckgo.mobile.android:id/primaryCta"]',
+        '//*[@resource-id="com.duckduckgo.mobile.android:id/bottomSheetPromoSecondaryButton"]',
+        '//*[@resource-id="com.duckduckgo.mobile.android:id/daxDialogDismissButton"]',
+        '//android.widget.Button[@text="Got it"]',
+        '//android.widget.Button[@text="Maybe later"]',
+      ],
+    });
   }
 }
 

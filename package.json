@@ -5,7 +5,7 @@
     "appium",
     "chrome-dev-tools"
   ],
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "",
   "license": "Apache-2.0",
   "repository": {
@@ -66,6 +66,7 @@
     "chai": "^4.3.6",
     "chrome-remote-interface": "^0.31.3",
     "get-port": "^5.1.1",
+    "node-fetch": "^2.6.7",
     "taiko": "https://github.com/getgauge/taiko.git"
   },
   "peerDependencies": {

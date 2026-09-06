@@ -2,8 +2,10 @@
 
 import { AndroidUiautomator2Driver } from 'appium-uiautomator2-driver';
 import { ADB } from 'appium-adb';
+import { resolveAdbPort } from '../src/adb.js';
 import log from '../src/logger.js';
 import { waitForCondition } from 'asyncbox';
+import { finishSession } from './browserReady.js';
 
 const START_APP_WAIT_DURATION = 60000;
 
@@ -18,18 +20,25 @@ const common = {
 };
 
 async function skipWelcomeBrave() {
-  const adb = await ADB.createADB();
+  const adbPort = resolveAdbPort();
+  const adb = await ADB.createADB({ adbPort });
   await adb.adbExec(['shell', 'pm', 'clear', 'com.brave.browser']);
-  // Suppress the first-run Welcome walkthrough (honored on emulators/debuggable builds;
-  // harmless no-op elsewhere, where the UI walkthrough below still handles it)
-  await adb.adbExec([
-    'shell',
-    "echo '_ --disable-fre --no-first-run' > /data/local/tmp/chrome-command-line",
-  ]);
+  // Optional: suppress Chromium's first-run experience. Off by default because
+  // /data/local/tmp/chrome-command-line is shared with Chrome and chromedriver,
+  // which writes its own chromeOptions.args there — clobbering it would change
+  // an unrelated Chrome session on the same device. Set CDP_SUPPRESS_FIRST_RUN=1
+  // to opt in; without it the readiness pass dismisses onboarding instead.
+  if (process.env.CDP_SUPPRESS_FIRST_RUN === '1') {
+    await adb.adbExec([
+      'shell',
+      "echo '_ --disable-fre --no-first-run' > /data/local/tmp/chrome-command-line",
+    ]);
+  }
   const driver = new AndroidUiautomator2Driver();
   const caps = {
     platformName: "Android",
     "appium:automationName": "UiAutomator2",
+    "appium:adbPort": adbPort,
     "appium:deviceName": "Android Device",
     "appium:appPackage": "com.brave.browser",
     "appium:appActivity": "com.google.android.apps.chrome.Main",
@@ -113,8 +122,10 @@ async function skipWelcomeBrave() {
       );
       await driver.click(continueButton.ELEMENT);
     }
+  } catch (error) {
+    log.info(`walkthrough did not complete (${error.message}) — checking readiness anyway`);
   } finally {
-    await driver.deleteSession();
+    await finishSession(driver, { adb, pkg: brave.pkg, component: `${brave.pkg}/${brave.activity}`, socket: 'chrome_devtools_remote' });
   }
 }
 
